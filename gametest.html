@@ -1,0 +1,336 @@
+<!doctype html>
+<html>
+
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Test</title>
+    <link href="main2.css" rel="stylesheet" type="text/css" />
+    
+</head>
+    
+<body>
+    
+    <center>
+      
+        <h1>Game Test</h1>
+        <p> Welcome! I am just testing out a game, not much to see here... yet. <br>
+        The game, in its current state, is to destroy 10 bad guys as quickly as possible. <br>
+        You can destroy bad guys by moving your character on top of them. <br>
+        *Note – the time and score functions are currently in progress, sorry! <br>
+        Scroll down for cool <b>character skins</b>, <b>controls</b> and <b>future fixes/improvements</b>.</p>
+            <br>
+        <div id="ScoreText">Bad Guys Destroyed: 0</div>
+        <div id="RecentScoreText">Recent Score: 0s</div>
+        <div id="HighScoreText">High Score: 0s</div>
+        <br>
+    <canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
+        <br>
+        <br>
+    <p>You can use the <b>WASD keys</b> to move your character! <br>
+    Also, the <b>'i' key</b> can be pressed for invisibility (use in game in progress).</p>
+    <p>Skins: (Move left or right after selecting a skin)</p>
+        <input type="radio" value="Default" onclick="DefaultSkin()" name="skin"> Default <input type="radio" value="Deadpool" onclick="DeadpoolSkin()" name="skin"> Deadpool <input type="radio" value="SpiderGwen" onclick="SpiderGwenSkin()" name="skin"> Spider-Gwen
+        <br>
+        <p>Future fixes and additions/improvements: Working time (for scoring purposes), Audio, Second Player</p>
+        <br>
+        <br>
+        <p>I'm also working on a 'Simon' (Pattern) Game:</p> <button onclick="StartGame()">Start Game</button> <br>
+        <canvas id="myCanvas2" width="600" height="400"></canvas>
+        <p>You can press the number keys to select the panel.<br>
+        The game is not yet functional - sorry. Hopefully it will be up soon!</p>
+        <br>
+        <br>
+    <button onclick="Homepage()" class="button-xlarge">Homepage</button>
+    </center>
+    
+</body>
+    
+<script>
+    
+    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        alert("Mobile not supported... yet")
+        window.location = "index.html";
+    }
+    
+    var bgX = Math.random() * 550;
+    var bgY = Math.random() * 350;
+    var bgW = 50;
+    var bgH = 50;
+    var Score = 0;
+    var Health = 20;
+    var RecentScore = 0;
+    var HighScore = 0;
+    var moveCount = 0;
+    var TimerCount = 30;
+    var TimeScore = 0;
+    var ScoreReset = false;
+    var clearCount = 0;
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var HeroY = 152;
+    var HeroX = 275;
+    var HeroW = 50;
+    var HeroH = 50;
+    
+    var Date2 = new Date();
+    var FinishTimeM = Date2.getMinutes();
+    var FinishTimeS = Date2.getSeconds();
+    var TimeDiffM = FinishTimeM - StartTimeM;
+    var TimeDiffS = FinishTimeS - StartTimeS;
+    var TimeDiff = (60*TimeDiffM) + TimeDiffS;
+    
+    var SkinRight = "files/right.png";
+    var SkinLeft = "files/left.png";
+    
+    var Date = new Date();
+    var StartTimeM = Date.getMinutes();
+    var StartTimeS = Date.getSeconds();
+    
+    function DefaultSkin() {
+        SkinRight = "files/right.png";
+        SkinLeft = "files/left.png";
+    }
+    
+    function DeadpoolSkin() {
+        SkinRight = "files/right2.png";
+        SkinLeft = "files/left2.png";
+    }
+    
+    function SpiderGwenSkin() {
+        SkinRight = "files/right3.png";
+        SkinLeft = "files/left3.png";
+    }
+    
+    function CoverCheck() {
+        if ((HeroX+25) > bgX && (HeroX+25) < (bgX + bgW) && (HeroY+47.5) > bgY && (HeroY+47.5) < (bgY + bgH)) {
+            Score++;
+            if (Score == 10) {
+                ScoreReset = true;
+                Score = 0;
+                Date2 = new Date();
+                FinishTimeM = Date2.getMinutes();
+                FinishTimeS = Date2.getSeconds();
+                TimeDiffM = FinishTimeM - StartTimeM;
+                TimeDiffS = FinishTimeS - StartTimeS;
+                TimeDiff = (60*TimeDiffM) + TimeDiffS;
+                TimeScore = TimeDiff;
+                RecentScore = TimeScore;
+                if (TimeScore < HighScore) {
+                    HighScore = TimeScore;
+                }
+                Date = new Date();
+                StartTimeM = Date.getMinutes();
+                StartTimeS = Date.getSeconds();
+            }
+            bgX = Math.random() * 550;
+            bgY = Math.random() * 350;
+            reDraw();
+        }
+    }
+    
+    function reDraw() {
+        
+        document.getElementById("ScoreText").innerHTML = "Bad Guys Destroyed: " + Score;
+        document.getElementById("RecentScoreText").innerHTML = "Recent Score: " + RecentScore + "s";
+        document.getElementById("HighScoreText").innerHTML = "High Score: " + HighScore + "s";
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        //ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(bgImg, 0, 0);
+        ctx.drawImage(HeroImage, HeroX, HeroY);
+        ctx.drawImage(badguyImg, bgX, bgY);
+        CoverCheck();
+        if (ScoreReset) {
+            Score = 0;
+            ScoreReset = false;
+        }
+    }
+    
+    var bgImg = new Image();
+    bgImg.onload = function () {
+        ctx.drawImage(bgImg, 0, 0);
+    }
+    bgImg.src = "files/bg.png";
+    
+    var HeroImage = new Image();
+    HeroImage.onload = function () {
+        ctx.drawImage(HeroImage, HeroX, HeroY);
+    }
+    HeroImage.src = "files/right.png";
+    
+    var badguyImg = new Image();
+    badguyImg.onload = function () {
+        ctx.drawImage(badguyImg, bgX, bgY);
+    }
+    badguyImg.src = "files/badguy.png";
+    
+    /*ctx.fillStyle = "#FF0000";
+    ctx.fillRect(0,0,canvas.width,canvas.height);*/
+    
+    function HideHero() {
+        if (clearCount % 2 == 0) {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.drawImage(bgImg, 0, 0);
+            ctx.drawImage(badguyImg, bgX, bgY);
+        } else {
+            reDraw();
+        }
+        clearCount++;
+    }
+    
+    function Up() {
+        if (clearCount % 2 == 0 && HeroY > 10) {
+            HeroY = HeroY - 10;
+            reDraw();
+        }
+    }
+    
+    function Down() {
+        if (clearCount % 2 == 0 && HeroY < 300) {
+            HeroY = HeroY + 10;
+            reDraw();
+        }
+    }
+    
+    function Left() {
+        if (clearCount % 2 == 0 && HeroX > 10) {
+            HeroX = HeroX - 10;
+            HeroImage.src = SkinLeft;
+            reDraw();
+        }
+        if (moveCount == 0) {
+            moveCount++;
+            StartTimer();
+        }
+    }
+    
+    function Right() {
+        if (clearCount % 2 == 0 && HeroX < 540) {
+            HeroX = HeroX + 10;
+            HeroImage.src = SkinRight;
+            reDraw();
+        }
+    }
+    
+    //KEYLISTENER
+    
+    var ColChg = true;
+    
+    window.onkeydown = function(e) {
+    
+        var key = e.keyCode ? e.keyCode : e.which;
+        
+        if (/*key == 37 ||*/ key == 65) {
+            Left();
+        } else if (/*key == 38 ||*/ key == 87) {
+            Up();
+        } else if (/*key == 39 ||*/ key == 68) {
+            Right();
+        } else if (/*key == 40 ||*/ key == 83) {
+            Down();
+        } else if (key == 73) {
+            HideHero();
+        }
+        
+        //SIMON
+        if (ColChg) {
+        if (key == 49) {
+            ctx2.fillStyle = "#FF4400";
+    ctx2.fillRect(145,45,150,150);
+    ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("1",200,145);
+            ColChg = false;
+        } else if (key == 50) {
+            ctx2.fillStyle = "#80FF08";
+    ctx2.fillRect(305,45,150,150);
+            ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("2",350,145);
+            ColChg = false;
+        } else if (key == 51) {
+            ctx2.fillStyle = "#3880FF";
+    ctx2.fillRect(145,205,150,150);
+            ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("3",195,300); 
+            ColChg = false;
+        } else if (key == 52) {
+    ctx2.fillStyle = "#F8FF73";
+    ctx2.fillRect(305,205,150,150);
+            ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("4",350,300);
+            ColChg = false;
+        }
+        }
+        
+    }
+    
+    function Homepage() {
+        
+        window.location = "index.html";
+        
+    }
+    
+    // SIMON GAME
+    
+    var StartGame = false;
+    
+    function StartGame() {
+        StartGame = true;
+    }
+    
+    var canvas2 = document.getElementById("myCanvas2");
+    var ctx2 = canvas2.getContext("2d");
+    var UserTurn = false;
+    var Level = 1;
+    /*let Pattern = new Array;
+    Pattern.push(0);
+    var randomnum = 0;
+    for (int i = 0; i < 50; i++) {
+        randomnum = Math.floor(Math.random() * 5);
+        while (randomnum == 0) {
+            randomnum = Math.floor(Math.random() * 5);
+        }
+        Pattern.push(randomnum);
+    }
+    console.log(Pattern);*/
+    ctx2.fillStyle = "#FF0000";
+    ctx2.fillRect(145,45,150,150);
+    ctx2.fillStyle = "#00FF00";
+    ctx2.fillRect(305,45,150,150);
+    ctx2.fillStyle = "#0000FF";
+    ctx2.fillRect(145,205,150,150);
+    ctx2.fillStyle = "#FFFF00";
+    ctx2.fillRect(305,205,150,150);
+    ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("1",200,145);
+    ctx2.fillText("2",350,145); 
+    ctx2.fillText("3",195,300); 
+    ctx2.fillText("4",350,300);
+    
+    window.onkeyup = function(e) {
+    
+        ctx2.fillStyle = "#FF0000";
+    ctx2.fillRect(145,45,150,150);
+    ctx2.fillStyle = "#00FF00";
+    ctx2.fillRect(305,45,150,150);
+    ctx2.fillStyle = "#0000FF";
+    ctx2.fillRect(145,205,150,150);
+    ctx2.fillStyle = "#FFFF00";
+    ctx2.fillRect(305,205,150,150);
+    ctx2.fillStyle = "#FFFFFF";
+    ctx2.font = "100px Georgia";
+    ctx2.fillText("1",200,145);
+    ctx2.fillText("2",350,145); 
+    ctx2.fillText("3",195,300); 
+    ctx2.fillText("4",350,300);
+        ColChg = true;
+        
+    }
+        
+</script>
+
+</html>
