@@ -17,7 +17,6 @@
         <p> Welcome! I am just testing out a game, not much to see here... yet. <br>
         The game, in its current state, is to destroy 10 bad guys as quickly as possible. <br>
         You can destroy bad guys by moving your character on top of them. <br>
-        *Note – the time and score functions are currently in progress, sorry! <br>
         Scroll down for cool <b>character skins</b>, <b>controls</b> and <b>future fixes/improvements</b>.</p>
             <br>
         <div id="ScoreText">Bad Guys Destroyed: 0</div>
@@ -39,7 +38,7 @@
         <canvas id="myCanvas2" width="600" height="400"></canvas>
         <p>You can press the number keys to select the panel.<br>
         The game is not yet functional - sorry. Hopefully it will be up soon!</p>
-        
+    
     </center>
     
 </body>
@@ -48,15 +47,15 @@
     
     if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         alert("Mobile not supported... yet")
+        window.location = "index.html";
     }
     
     var counter = 0;
-    countUP();	
-	
-    function countUP() {
-	counter++;
-	setTimeout ("countUP()", 1000);
-    }
+	countUP();	
+	function countUP () {
+		counter++;
+		setTimeout ("countUP()", 1000);
+	}
     
     var HighScore1 = false;
     var bgX = Math.random() * 550;
@@ -79,8 +78,22 @@
     var HeroW = 50;
     var HeroH = 50;
     
+    var StartTimer = 0;
+    var EndTimer = 0;
+    
+    var Date2 = new Date();
+    var FinishTimeM = Date2.getMinutes();
+    var FinishTimeS = Date2.getSeconds();
+    var TimeDiffM = FinishTimeM - StartTimeM;
+    var TimeDiffS = FinishTimeS - StartTimeS;
+    var TimeDiff = (60*TimeDiffM) + TimeDiffS;
+    
     var SkinRight = "files/right.png";
     var SkinLeft = "files/left.png";
+    
+    var Date = new Date();
+    var StartTimeM = Date.getMinutes();
+    var StartTimeS = Date.getSeconds();
     
     function DefaultSkin() {
         SkinRight = "files/right.png";
@@ -129,8 +142,8 @@
         CoverCheck();
         if (ScoreReset) {
             Score = 0;
+            counter = 0;
             ScoreReset = false;
-	    counter = 0;
         }
     }
     
@@ -186,9 +199,6 @@
             HeroImage.src = SkinLeft;
             reDraw();
         }
-        if (moveCount == 0) {
-            moveCount++;
-        }
     }
     
     function Right() {
@@ -207,13 +217,13 @@
     
         var key = e.keyCode ? e.keyCode : e.which;
         
-	    if (key == 65 || key == 68 || key == 83 || key == 87) {
-            	if (moveCount == 0) {
-                    counter = 0;
-            	}
-                moveCount++;
+        if (key == 65 || key == 68 || key == 83 || key == 87) {
+            if (moveCount == 0) {
+                counter = 0;
             }
-	    
+            moveCount++;
+        }
+        
         if (/*key == 37 ||*/ key == 65) {
             Left();
         } else if (/*key == 38 ||*/ key == 87) {
@@ -261,6 +271,12 @@
         
     }
     
+    function Homepage() {
+        
+        window.location = "index.html";
+        
+    }
+    
     // SIMON GAME
     
     var StartGame = false;
@@ -273,17 +289,16 @@
     var ctx2 = canvas2.getContext("2d");
     var UserTurn = false;
     var Level = 1;
-    /*let Pattern = new Array;
-    Pattern.push(0);
-    var randomnum = 0;
+    var Pattern = [];
+    /*var randomnum = 0;
     for (int i = 0; i < 50; i++) {
         randomnum = Math.floor(Math.random() * 5);
         while (randomnum == 0) {
             randomnum = Math.floor(Math.random() * 5);
         }
         Pattern.push(randomnum);
-    }
-    console.log(Pattern);*/
+    }*/
+
     ctx2.fillStyle = "#FF0000";
     ctx2.fillRect(145,45,150,150);
     ctx2.fillStyle = "#00FF00";
