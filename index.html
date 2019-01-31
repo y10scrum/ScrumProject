@@ -78,19 +78,8 @@
     var HeroW = 50;
     var HeroH = 50;
     
-    var Date2 = new Date();
-    var FinishTimeM = Date2.getMinutes();
-    var FinishTimeS = Date2.getSeconds();
-    var TimeDiffM = FinishTimeM - StartTimeM;
-    var TimeDiffS = FinishTimeS - StartTimeS;
-    var TimeDiff = (60*TimeDiffM) + TimeDiffS;
-    
     var SkinRight = "files/right.png";
     var SkinLeft = "files/left.png";
-    
-    var Date = new Date();
-    var StartTimeM = Date.getMinutes();
-    var StartTimeS = Date.getSeconds();
     
     function DefaultSkin() {
         SkinRight = "files/right.png";
@@ -140,6 +129,7 @@
         if (ScoreReset) {
             Score = 0;
             ScoreReset = false;
+	    counter = 0;
         }
     }
     
@@ -197,7 +187,6 @@
         }
         if (moveCount == 0) {
             moveCount++;
-            StartTimer();
         }
     }
     
@@ -217,6 +206,13 @@
     
         var key = e.keyCode ? e.keyCode : e.which;
         
+	    if (key == 65 || key == 68 || key == 83 || key == 87) {
+            	if (moveCount == 0) {
+                    counter = 0;
+            	}
+                moveCount++;
+            }
+	    
         if (/*key == 37 ||*/ key == 65) {
             Left();
         } else if (/*key == 38 ||*/ key == 87) {
