@@ -50,6 +50,14 @@
         alert("Mobile not supported... yet")
     }
     
+    var counter = 0;
+	countUP();	
+	function countUP () {
+		counter++;
+		setTimeout ("countUP()", 1000);
+	}
+    
+    var HighScore1 = false;
     var bgX = Math.random() * 550;
     var bgY = Math.random() * 350;
     var bgW = 50;
@@ -105,20 +113,12 @@
             if (Score == 10) {
                 ScoreReset = true;
                 Score = 0;
-                Date2 = new Date();
-                FinishTimeM = Date2.getMinutes();
-                FinishTimeS = Date2.getSeconds();
-                TimeDiffM = FinishTimeM - StartTimeM;
-                TimeDiffS = FinishTimeS - StartTimeS;
-                TimeDiff = (60*TimeDiffM) + TimeDiffS;
-                TimeScore = TimeDiff;
+                TimeScore = counter;
                 RecentScore = TimeScore;
-                if (TimeScore < HighScore) {
+                if (TimeScore < HighScore || !HighScore1) {
                     HighScore = TimeScore;
+                    HighScore1 = true;
                 }
-                Date = new Date();
-                StartTimeM = Date.getMinutes();
-                StartTimeS = Date.getSeconds();
             }
             bgX = Math.random() * 550;
             bgY = Math.random() * 350;
