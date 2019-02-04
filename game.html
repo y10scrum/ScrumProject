@@ -131,6 +131,16 @@
         background-color: #55d6aa;
         color: white;
     }
+    p {
+        padding: 10px;
+        margin-left: 200px;
+        margin-right: 200px;
+        font-size: 20px;
+        font-family: 'Montserrat', sans-serif;
+        border-left: 6px solid white;
+        background-color: #55d6aa;
+        color: white;
+    }
     div {
         padding: 10px;
         margin-left: 200px;
@@ -237,7 +247,7 @@
         document.getElementById("HighScoreText").innerHTML = "High Score: " + HighScore + "s";
         ctx.clearRect(0,0,canvas.width,canvas.height);
         //ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(bgImg, 0, 0, 600, 400);
+        ctx.drawImage(bgImg, 0, 0);
         ctx.drawImage(HeroImage, HeroX, HeroY);
         ctx.drawImage(badguyImg, bgX, bgY);
         CoverCheck();
@@ -248,12 +258,11 @@
         }
     }
     
-    var bgPic = 1;
     var bgImg = new Image();
     bgImg.onload = function () {
-        ctx.drawImage(bgImg, 0, 0, 600, 400);
+        ctx.drawImage(bgImg, 0, 0);
     }
-    bgImg.src = "images/bg1.jpg";
+    bgImg.src = "files/bg.png";
     
     var HeroImage = new Image();
     HeroImage.onload = function () {
@@ -273,7 +282,7 @@
     function HideHero() {
         if (clearCount % 2 == 0) {
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            ctx.drawImage(bgImg, 0, 0, 600, 400);
+            ctx.drawImage(bgImg, 0, 0);
             ctx.drawImage(badguyImg, bgX, bgY);
         } else {
             reDraw();
@@ -324,15 +333,6 @@
                 counter = 0;
             }
             moveCount++;
-        }
-        
-        if (key == 66) {
-            bgPic++;
-            if (bgPic == 8) {
-                bgPic = 1;
-            }
-            bgImg.src = "images/bg" + bgPic + ".jpg";
-            reDraw();
         }
         
         if (/*key == 37 ||*/ key == 65) {
