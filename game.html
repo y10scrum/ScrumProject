@@ -161,12 +161,22 @@
         alert("Mobile not supported... yet")
     }
     
+    var startGame = false;
+    
+    function startTheGame() {
+        startGame = true;
+    }
+    
     var counter = 0;
 	countUP();	
 	function countUP () {
 		counter++;
 		setTimeout ("countUP()", 1000);
 	}
+    
+    var bgPic = 1;
+    var pause = false;
+    var counterStop = 0;
     
     var HighScore1 = false;
     var bgX = Math.random() * 550;
@@ -245,9 +255,9 @@
         document.getElementById("ScoreText").innerHTML = "Bad Guys Destroyed: " + Score;
         document.getElementById("RecentScoreText").innerHTML = "Recent Score: " + RecentScore + "s";
         document.getElementById("HighScoreText").innerHTML = "High Score: " + HighScore + "s";
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0,0,600,400);
         //ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.drawImage(bgImg, 0, 0);
+        ctx.drawImage(bgImg, 0, 0, 600, 400);
         ctx.drawImage(HeroImage, HeroX, HeroY);
         ctx.drawImage(badguyImg, bgX, bgY);
         CoverCheck();
@@ -258,11 +268,11 @@
         }
     }
     
-    var bgImg = new Image();
-    bgImg.onload = function () {
-        ctx.drawImage(bgImg, 0, 0);
+    var startImg = new Image();
+    startImg.onload = function () {
+        ctx.drawImage(startImg, 0, 0, 600, 400);
     }
-    bgImg.src = "files/bg.png";
+    startImg.src = "files/startmenu.png";
     
     var HeroImage = new Image();
     HeroImage.onload = function () {
@@ -275,6 +285,16 @@
         ctx.drawImage(badguyImg, bgX, bgY);
     }
     badguyImg.src = "files/badguy.png";
+    
+    var bgImg = new Image();
+    bgImg.onload = function () {
+        ctx.drawImage(bgImg, 0, 0, 600, 400);
+        ctx.drawImage(startImg, 0, 0, 600, 400);
+    }
+    bgImg.src = "Images/bg1.jpg";
+    
+    var pauseMenu = new Image();
+    pauseMenu.src = "Images/pausemenu.png";
     
     /*ctx.fillStyle = "#FF0000";
     ctx.fillRect(0,0,canvas.width,canvas.height);*/
@@ -328,12 +348,36 @@
     
         var key = e.keyCode ? e.keyCode : e.which;
         
-        if (key == 65 || key == 68 || key == 83 || key == 87) {
+        if (key == 66) {
+            if (startGame) {
+                bgPic++;
+                bgImg.src = "Images/bg" + bgPic + ".jpg";
+                ctx.drawImage(bgImg, 0, 0, 600, 400);
+            }
+        }
+        
+        if (key == 80) {
+            if (!pause) {
+                pause = true;
+                ctx.drawImage(pauseMenu,0,0,600,400);
+                counterStop = counter;
+            } else {
+                pause = false;
+                reDraw();
+                counter = counterStop;
+            }
+        }
+        
+        if (key == 49) {
+            startTheGame();
+            reDraw();
+        }
+        
+        if ((key == 65 || key == 68 || key == 83 || key == 87) && (startGame) && (!pause)) {
             if (moveCount == 0) {
                 counter = 0;
             }
             moveCount++;
-        }
         
         if (/*key == 37 ||*/ key == 65) {
             Left();
@@ -346,6 +390,9 @@
         } else if (key == 73) {
             HideHero();
         }
+        }
+        
+        
         
         //SIMON
         if (ColChg) {
