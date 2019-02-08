@@ -26,7 +26,8 @@
             <br>
             <div id="ScoreText">Bad Guys Destroyed: 0</div>
             <div id="RecentScoreText">Recent Score: 0s</div>
-        <div id="HighScoreText">High Score: 0s</div>
+            <div id="HighScoreText">High Score: 0s</div>
+            <div id="CurrentScoreText">Current Score: 0s</div>
         <br>
     <canvas id="myCanvas" width="600" height="400" style="border:1px solid #000000;"></canvas>
         <br>
@@ -171,7 +172,10 @@
 	countUP();	
 	function countUP () {
 		counter++;
-		setTimeout ("countUP()", 1000);
+        if (startGame && !pause) {
+            document.getElementById("CurrentScoreText").innerHTML = "Current Score: " + counter + "s";
+        }
+        setTimeout ("countUP()", 1000);
 	}
     
     var bgPic = 1;
