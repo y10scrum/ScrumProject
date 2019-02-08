@@ -353,8 +353,11 @@
         var key = e.keyCode ? e.keyCode : e.which;
         
         if (key == 66) {
-            if (startGame) {
+            if (startGame && !pause) {
                 bgPic++;
+		if (bgPic == 8) {
+			bgPic = 1;
+		}
                 bgImg.src = "Images/bg" + bgPic + ".jpg";
                 ctx.drawImage(bgImg, 0, 0, 600, 400);
             }
