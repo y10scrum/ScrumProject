@@ -1,21 +1,13 @@
 <html>
-    
     <head>
-    
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="shortcut icon" href="download-1.ico" />
-        <link href="main.css" rel="stylesheet" type="text/css" />
-    
     </head>
-    
-    <body>
-    
     <header>
-    <h1>Tommy's Timer</h1>
+        <h1>Tommy's Timer</h1>
         <nav>
         <ul>    
             <li><a href="index.html">Home</a></li> 
-            <li><a href="https://github.com/Haitong28473957/ScrumProject">Github Repository</a></li> 
             <li><a href="Roles.html">The Team</a></li> 
             <li><a href="aboutprogram.html">About the Program</a></li>
             <li><a href="Sprintstories.html">Sprint Stories</a></li>
@@ -23,7 +15,101 @@
         </ul>
         </nav>
     </header>
-    
+    <body>
+        <i><title>Tommy's Timer</title></i>
+        <br><h2>About the Game</h2>
+        
+        <p>Tommy's Timer is a free to play program with no sign up required, all you need to do is visit the "Game Test" tab in the navigation bar at the top of the screen, instructions on how to play the game will be posted.
+        
+        Tommy's Timer has many innovative features, with more to come! As of yet, the program boasts multiple user skins, a plethora of background images, a score system based on time, along with a way to save high scores. Also, there is a user friendly start game interface, along with a intuitive pause menu for when you need to go eat but you're in the middle of a game.
+        
+            Features to come in the future will be a two player option, randomly moving badguys, and a variety of powerups for the main character. On top of this, the game's graphics will be improved, with a variety of more unlockable character, along with a downloadable version of the game so the user does not always need to visit the website to play the game everytime. The Simon Game at the bottom of the game test tab is another smaller project that is a simple rinse & repeat game that requires you to match the pattern of the AI, or "Simon". This game however is still under development and will be ready shortly.</p>
+        
+        <style>
+            body{
+     background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url(images.jpg);
+        background-size: cover;
+        background-position: center;
+    }
+
+      nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        margin right: 10px;
+    }
+    nav li {
+        display: inline-block;
+        margin: 0 35px;
+        padding-top: 25px;
+        position: relative;
+         
+    }
+    nav a {
+        color: #444;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-size; 25px;
+    }
+    nav a:hover {
+        color: #000;
+    }
+    nav a::before{
+         content: '';
+        display: block;
+        height: 5px;
+        width: 0%;
+        background-color: #444;
+        position: absolute;
+        top: 0;
+        transition: all ease-in-out 250ms;
+        
+        
+    }
+    nav a:hover::before {
+        width: 100%;
+    }
+    header:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    nav {
+        float: right;
+    }
+    header {
+        background-color: #55d6aa;
+    }
+    h1 {
+        float: left;
+        color: white;
+        font-family: "Montserrat", sans-serif;
+        font-size: 25px;
+        text-shadow: 3px 2px black;
+        padding-left: 40px;
+    }
+    p {
+        text-align: center;
+        margin-left: 20%;
+        width: 60%;
+        padding: 10px;
+        font-size: 20px;
+        font-family: 'Montserrat', sans-serif;
+        border-top: 6px solid white;
+        color: white;
+        float: left;
+        
+    }
+    h2 {
+        margin-left: 20%;
+        width: 60%;
+        font-size: 30px;
+        font-family: "Montserrat", sans-serif;
+        color: white;
+        float: center;
+        text-align: center;
+    }
+        </style>
     </body>
-    
 </html>
