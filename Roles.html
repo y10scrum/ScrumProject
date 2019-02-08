@@ -3,6 +3,18 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="shortcut icon" href="download-1.ico" />
     </head>
+     <header>
+        <h1>Tommy's Timer</h1>
+        <nav>
+        <ul>    
+            <li><a href="index.html">Home</a></li> 
+            <li><a href="Roles.html">The Team</a></li> 
+            <li><a href="aboutprogram.html">About the Program</a></li>
+            <li><a href="Sprintstories.html">Sprint Stories</a></li>
+            <li><a href="game.html">Game Test</a></li>
+        </ul>
+        </nav>
+    </header>
     <body> 
          <center><h1>The Developers:</h1></center>
         <center><p>The four glorius developers of this very website</p></center>
@@ -31,7 +43,55 @@
         </p2>
         </center>
 <style> 
-    
+    nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        margin right: 10px;
+    }
+    nav li {
+        display: inline-block;
+        margin: 0 35px;
+        padding-top: 25px;
+        position: relative;
+         
+    }
+    nav a {
+        color: #444;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-size; 25px;
+    }
+    nav a:hover {
+        color: #000;
+    }
+    nav a::before{
+         content: '';
+        display: block;
+        height: 5px;
+        width: 0%;
+        background-color: #444;
+        position: absolute;
+        top: 0;
+        transition: all ease-in-out 250ms;
+        
+        
+    }
+    nav a:hover::before {
+        width: 100%;
+    }
+    header:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    nav {
+        float: right;
+    }
+     header {
+        background-color: #55d6aa;
+    }
     img { 
     width: 300px;
     height: 400px;
